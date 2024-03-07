@@ -1,6 +1,8 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import { type Todo } from '../App'
 
+import _ from 'lodash'
+
 interface TodoState {
   todos: Todo[]
 }
@@ -21,11 +23,11 @@ const todoSlice = createSlice({
       })
     },
     removeTodo (state, action: PayloadAction<{ id: string }>) {
-      state.todos = state.todos.filter((todo) => todo.id !== action.payload.id)
+      state.todos = _.reject(state.todos, { id: action.payload.id })
     },
     toggleTodoComplete (state, action: PayloadAction<{ id: string }>) {
-      const toggledTodo = state.todos.find((todo) => todo.id === action.payload.id)
-      if (toggledTodo !== undefined) {
+      const toggledTodo = _.find(state.todos, { id: action.payload.id })
+      if (toggledTodo) {
         toggledTodo.completed = !toggledTodo.completed
       }
     }
