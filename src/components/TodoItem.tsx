@@ -4,14 +4,17 @@ import { useDispatch } from 'react-redux'
 import { removeTodo, toggleTodoComplete } from '../redux/todoSlice'
 
 interface TodoItemProps extends Todo {
-
 }
 
 const TodoItem: FC<TodoItemProps> = ({ id, text, completed }): ReactElement => {
   const dispatch = useDispatch()
 
-  const handleCompleteTodo = (id: string) => () => dispatch(toggleTodoComplete({ id }))
-  const handleRemoveTodo = (id: string) => () => dispatch(removeTodo({ id }))
+  const handleCompleteTodo = (id: string) => (): void => {
+    dispatch(toggleTodoComplete({ id }))
+  }
+  const handleRemoveTodo = (id: string) => (): void => {
+    dispatch(removeTodo({ id }))
+  }
 
   return (
     <li key={id}>

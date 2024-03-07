@@ -7,7 +7,6 @@ interface InputFieldProps {
 }
 
 const InputField: FC<InputFieldProps> = ({ text, handleChangeText, handleAddTodo }): ReactElement => {
-
   return (
     <label>
       <input type="text" value={text} onChange={handleChangeText}/>

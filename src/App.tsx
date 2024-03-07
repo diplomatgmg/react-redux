@@ -1,5 +1,5 @@
 import React, { type ChangeEvent, useState } from 'react'
-import './style.css'
+import './css/style.css'
 import TodoList from './components/TodoList'
 import InputField from './components/InputField'
 import { useDispatch } from 'react-redux'

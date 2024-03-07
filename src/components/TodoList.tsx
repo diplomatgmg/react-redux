@@ -2,9 +2,10 @@ import React, { type ReactElement } from 'react'
 import { type Todo } from '../App'
 import TodoItem from './TodoItem'
 import { useSelector } from 'react-redux'
+import { type RootState } from '../redux/store'
 
 const TodoList = (): ReactElement | null => {
-  const todos = useSelector((state: any) => state.todos.todos)
+  const todos: Todo[] = useSelector((state: RootState) => state.todos.todos)
 
   if (todos.length === 0) {
     return null
@@ -13,7 +14,7 @@ const TodoList = (): ReactElement | null => {
   return (
     <ul>
       {
-        todos.map((todo: Todo) => (
+        todos.map((todo) => (
           <TodoItem key={todo.id}
                     {...todo}
 
