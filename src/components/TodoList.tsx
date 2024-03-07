@@ -6,6 +6,7 @@ import { type RootState } from '../redux/store'
 
 const TodoList = (): ReactElement | null => {
   const todos: Todo[] = useSelector((state: RootState) => state.todos.todos)
+  console.log(todos)
 
   if (todos.length === 0) {
     return null
@@ -13,14 +14,12 @@ const TodoList = (): ReactElement | null => {
 
   return (
     <ul>
-      {
-        todos.map((todo) => (
+      {todos.map((todo) => (
           <TodoItem key={todo.id}
                     {...todo}
 
           />
-        ))
-      }
+      ))}
     </ul>
   )
 }

@@ -6,7 +6,7 @@ import { removeTodo, toggleTodoComplete } from '../redux/todoSlice'
 interface TodoItemProps extends Todo {
 }
 
-const TodoItem: FC<TodoItemProps> = ({ id, text, completed }): ReactElement => {
+const TodoItem: FC<TodoItemProps> = ({ id, title, completed }): ReactElement => {
   const dispatch = useDispatch()
 
   const handleCompleteTodo = (id: string) => (): void => {
@@ -21,7 +21,7 @@ const TodoItem: FC<TodoItemProps> = ({ id, text, completed }): ReactElement => {
       <input type="checkbox"
              checked={completed}
              onChange={handleCompleteTodo(id)}/>
-      <span>{text}</span>
+      <span>{title}</span>
       <span className="delete"
             onClick={handleRemoveTodo(id)}>
         &times;

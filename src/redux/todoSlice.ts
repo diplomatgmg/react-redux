@@ -1,39 +1,35 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { type Todo } from '../App'
-
-import _ from 'lodash'
+import reducers from './reducers'
+import extraReducers from './extraReducers'
 
 interface TodoState {
   todos: Todo[]
+  status: 'loading' | 'resolved' | 'rejected' | null
+  error: boolean
 }
 
 const initialState: TodoState = {
-  todos: []
+  todos: [],
+  status: null,
+  error: false
 }
+
+const fetchTodos = createAsyncThunk(
+  'todos/fetchTodos',
+  async () => {
+    const response = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=10')
+    return await response.json()
+  }
+)
 
 const todoSlice = createSlice({
   name: 'todos',
   initialState,
-  reducers: {
-    addTodo (state, action: PayloadAction<{ text: string }>) {
-      state.todos.push({
-        id: new Date().toISOString(),
-        text: action.payload.text,
-        completed: false
-      })
-    },
-    removeTodo (state, action: PayloadAction<{ id: string }>) {
-      state.todos = _.reject(state.todos, { id: action.payload.id })
-    },
-    toggleTodoComplete (state, action: PayloadAction<{ id: string }>) {
-      const toggledTodo = _.find(state.todos, { id: action.payload.id })
-      if (toggledTodo !== undefined) {
-        toggledTodo.completed = !toggledTodo.completed
-      }
-    }
-  }
+  reducers,
+  extraReducers
 })
 
 export const { addTodo, removeTodo, toggleTodoComplete } = todoSlice.actions
 export default todoSlice.reducer
-export type { TodoState }
+export { type TodoState, fetchTodos }
