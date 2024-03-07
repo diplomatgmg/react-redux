@@ -3,18 +3,20 @@ import { type Todo } from '../App'
 import TodoItem from './TodoItem'
 import { useSelector } from 'react-redux'
 import { type RootState } from '../redux/store'
+import _ from 'lodash'
 
 const TodoList = (): ReactElement | null => {
   const todos: Todo[] = useSelector((state: RootState) => state.todos.todos)
-  console.log(todos)
 
   if (todos.length === 0) {
     return null
   }
 
+  const sortedTodos = _.sortBy(todos, ['completed'] as Array<keyof Todo>)
+
   return (
     <ul>
-      {todos.map((todo) => (
+      {sortedTodos.map((todo) => (
           <TodoItem key={todo.id}
                     {...todo}
 
