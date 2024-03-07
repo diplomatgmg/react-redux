@@ -27,7 +27,7 @@ const todoSlice = createSlice({
     },
     toggleTodoComplete (state, action: PayloadAction<{ id: string }>) {
       const toggledTodo = _.find(state.todos, { id: action.payload.id })
-      if (toggledTodo) {
+      if (toggledTodo !== undefined) {
         toggledTodo.completed = !toggledTodo.completed
       }
     }
