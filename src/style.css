@@ -1,0 +1,25 @@
+.app {
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 50px;
+}
+.app ul {
+  list-style: none;
+}
+.app li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.delete {
+  color: red;
+  cursor: pointer;
+}
+
+input:checked + span {
+  text-decoration: line-through;
+}
+
+/*# sourceMappingURL=style.css.map */
