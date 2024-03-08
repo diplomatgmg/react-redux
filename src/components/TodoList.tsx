@@ -1,9 +1,9 @@
 import React, { type ReactElement } from 'react'
-import { type Todo } from '../App'
 import TodoItem from './TodoItem'
 import { useSelector } from 'react-redux'
 import { type RootState } from '../redux/store'
 import _ from 'lodash'
+import { type Todo } from '../redux/todoSlice'
 
 const TodoList = (): ReactElement | null => {
   const todos = useSelector((state: RootState) => state.todos.todos)

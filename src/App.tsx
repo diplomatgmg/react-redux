@@ -3,15 +3,8 @@ import './css/style.css'
 import TodoList from './components/TodoList'
 import InputField from './components/InputField'
 import { useDispatch, useSelector } from 'react-redux'
-import { addTodo } from './redux/todoSlice'
 import { type AppDispatch, type RootState } from './redux/store'
-import { fetchTodos } from './redux/apiRequests'
-
-interface Todo {
-  id: string
-  title: string
-  completed: boolean
-}
+import { fetchAddNewTask, fetchTodos } from './redux/apiRequests'
 
 const App = (): React.ReactElement => {
   const [text, setText] = useState<string>('')
@@ -27,7 +20,7 @@ const App = (): React.ReactElement => {
   }
 
   const handleAddTask = (): void => {
-    dispatch(addTodo({ title: text }))
+    void dispatch(fetchAddNewTask(text))
     setText('')
   }
 
@@ -44,4 +37,3 @@ const App = (): React.ReactElement => {
 }
 
 export default App
-export { type Todo }

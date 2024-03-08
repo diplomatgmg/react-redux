@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { removeTodo, toggleTodoComplete } from './todoSlice'
+import { addTodo, removeTodo, toggleTodoComplete } from './todoSlice'
 import _ from 'lodash'
 import { type RootState } from './store'
 
@@ -74,4 +74,35 @@ const fetchToggleStatusTodo = createAsyncThunk(
   }
 )
 
-export { fetchTodos, fetchDeleteTodo, fetchToggleStatusTodo }
+const fetchAddNewTask = createAsyncThunk(
+  'todos/fetchAddNewTask',
+  async (title: string, { rejectWithValue, dispatch }) => {
+    const todo = {
+      title,
+      userId: 1,
+      completed: false
+    }
+
+    try {
+      const response = await fetch('https://jsonplaceholder.typicode.com/todos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(todo)
+      })
+
+      if (!response.ok) {
+        console.log('Can\'t create new task.')
+        return
+      }
+
+      dispatch(addTodo({ title }))
+
+    } catch (error: any) {
+      return rejectWithValue(error.message)
+    }
+  }
+)
+
+export { fetchTodos, fetchDeleteTodo, fetchToggleStatusTodo, fetchAddNewTask }

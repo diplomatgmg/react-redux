@@ -1,7 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { type Todo } from '../App'
 import reducers from './reducers'
 import extraReducers from './extraReducers'
+
+interface Todo {
+  id: string
+  title: string
+  completed: boolean
+}
 
 interface TodoState {
   todos: Todo[]
@@ -24,4 +29,4 @@ const todoSlice = createSlice({
 
 export const { addTodo, removeTodo, toggleTodoComplete } = todoSlice.actions
 export default todoSlice.reducer
-export { type TodoState }
+export { type Todo, type TodoState }

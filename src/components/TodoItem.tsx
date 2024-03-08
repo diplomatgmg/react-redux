@@ -1,7 +1,7 @@
 import React, { type FC, type ReactElement } from 'react'
-import { type Todo } from '../App'
 import { useDispatch } from 'react-redux'
 import { fetchDeleteTodo, fetchToggleStatusTodo } from '../redux/apiRequests'
+import { type Todo } from '../redux/todoSlice'
 
 interface TodoItemProps extends Todo {
 }
