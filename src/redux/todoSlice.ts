@@ -10,13 +10,13 @@ interface Todo {
 
 interface TodoState {
   todos: Todo[]
-  status: 'loading' | 'resolved' | 'rejected' | null
+  status: 'idle' | 'pending' | 'succeeded' | 'failed'
   error: boolean | unknown
 }
 
 const initialState: TodoState = {
   todos: [],
-  status: null,
+  status: 'idle',
   error: false
 }
 

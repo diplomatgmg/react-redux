@@ -16,8 +16,10 @@ const fetchTodos = createAsyncThunk(
 
       return await response.json()
 
-    } catch (error: any) {
-      return rejectWithValue(error.message)
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message)
+      }
     }
 
   }
@@ -38,8 +40,10 @@ const fetchDeleteTodo = createAsyncThunk(
 
       dispatch(removeTodo({ id }))
 
-    } catch (error: any) {
-      return rejectWithValue(error.message)
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message)
+      }
     }
   }
 )
@@ -68,8 +72,10 @@ const fetchToggleStatusTodo = createAsyncThunk(
 
       dispatch(toggleTodoComplete({ id }))
 
-    } catch (error: any) {
-      return rejectWithValue(error.message)
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message)
+      }
     }
   }
 )

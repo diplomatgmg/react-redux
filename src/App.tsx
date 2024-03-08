@@ -28,7 +28,7 @@ const App = (): React.ReactElement => {
     <div className="app">
       <InputField text={text} handleChangeText={handleChangeText} handleAddTodo={handleAddTask}/>
 
-      {status === 'loading' && <h2>Loading...</h2>}
+      {status === 'pending' && <h2>Loading...</h2>}
       {error !== false && <h2>ERROR!!!</h2> }
 
       <TodoList />
