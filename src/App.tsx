@@ -5,7 +5,7 @@ import InputField from './components/InputField'
 import { useDispatch, useSelector } from 'react-redux'
 import { addTodo } from './redux/todoSlice'
 import { type AppDispatch, type RootState } from './redux/store'
-import { fetchTodos } from './redux/extraReducers'
+import { fetchTodos } from './redux/apiRequests'
 
 interface Todo {
   id: string
