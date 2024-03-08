@@ -1,13 +1,49 @@
 import { type ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit'
-import { type TodoState } from './todoSlice'
+import { removeTodo, type TodoState } from './todoSlice'
 
 const fetchTodos = createAsyncThunk(
   'todos/fetchTodos',
-  async () => {
-    const response = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=10')
-    return await response.json()
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=10')
+
+      if (!response.ok) {
+        throw new Error('bad request')
+      }
+
+      return await response.json()
+
+    } catch (error: any) {
+      return rejectWithValue(error.message)
+    }
+
   }
 )
+
+const fetchDeleteTodo = createAsyncThunk(
+  'todos/deleteTodo',
+  async (id: string, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+        method: 'DELETE'
+      })
+
+      if (!response.ok) {
+        throw new Error('Can\'t delete task.')
+      }
+
+      dispatch(removeTodo({ id }))
+
+    } catch (error: any) {
+      return rejectWithValue(error.message)
+    }
+  }
+)
+
+const setError = (state: any, action: any): void => {
+  state.status = 'rejected'
+  state.error = action.payload
+}
 
 export default (builder: ActionReducerMapBuilder<TodoState>): void => {
   builder
@@ -19,10 +55,9 @@ export default (builder: ActionReducerMapBuilder<TodoState>): void => {
       state.status = 'resolved'
       state.todos = action.payload
     })
-    .addCase(fetchTodos.rejected, (state) => {
-      state.status = 'rejected'
-      state.error = true
-    })
+    .addCase(fetchTodos.rejected, setError)
+    .addCase(fetchDeleteTodo.rejected, setError)
+
 }
 
-export { fetchTodos }
+export { fetchTodos, fetchDeleteTodo }

@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import { type Todo } from '../App'
 import reducers from './reducers'
 import extraReducers from './extraReducers'
@@ -6,7 +6,7 @@ import extraReducers from './extraReducers'
 interface TodoState {
   todos: Todo[]
   status: 'loading' | 'resolved' | 'rejected' | null
-  error: boolean
+  error: boolean | unknown
 }
 
 const initialState: TodoState = {
@@ -14,14 +14,6 @@ const initialState: TodoState = {
   status: null,
   error: false
 }
-
-const fetchTodos = createAsyncThunk(
-  'todos/fetchTodos',
-  async () => {
-    const response = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=10')
-    return await response.json()
-  }
-)
 
 const todoSlice = createSlice({
   name: 'todos',
@@ -32,4 +24,4 @@ const todoSlice = createSlice({
 
 export const { addTodo, removeTodo, toggleTodoComplete } = todoSlice.actions
 export default todoSlice.reducer
-export { type TodoState, fetchTodos }
+export { type TodoState }

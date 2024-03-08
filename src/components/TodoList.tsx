@@ -6,7 +6,7 @@ import { type RootState } from '../redux/store'
 import _ from 'lodash'
 
 const TodoList = (): ReactElement | null => {
-  const todos: Todo[] = useSelector((state: RootState) => state.todos.todos)
+  const todos = useSelector((state: RootState) => state.todos.todos)
 
   if (todos.length === 0) {
     return null

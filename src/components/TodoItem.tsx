@@ -1,7 +1,8 @@
 import React, { type FC, type ReactElement } from 'react'
 import { type Todo } from '../App'
 import { useDispatch } from 'react-redux'
-import { removeTodo, toggleTodoComplete } from '../redux/todoSlice'
+import { toggleTodoComplete } from '../redux/todoSlice'
+import { fetchDeleteTodo } from '../redux/extraReducers'
 
 interface TodoItemProps extends Todo {
 }
@@ -13,7 +14,7 @@ const TodoItem: FC<TodoItemProps> = ({ id, title, completed }): ReactElement => 
     dispatch(toggleTodoComplete({ id }))
   }
   const handleRemoveTodo = (id: string) => (): void => {
-    dispatch(removeTodo({ id }))
+    dispatch(fetchDeleteTodo(id) as any)
   }
 
   return (
