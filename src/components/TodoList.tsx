@@ -1,12 +1,11 @@
 import React, { type ReactElement } from 'react'
 import TodoItem from './TodoItem'
-import { useSelector } from 'react-redux'
-import { type RootState } from '../redux/store'
 import _ from 'lodash'
 import { type Todo } from '../redux/todoSlice'
+import { useAppSelector } from '../redux/hooks'
 
 const TodoList = (): ReactElement | null => {
-  const todos = useSelector((state: RootState) => state.todos.todos)
+  const todos = useAppSelector((state) => state.todos.todos)
 
   if (todos.length === 0) {
     return null

@@ -1,13 +1,13 @@
 import React, { type FC, type ReactElement } from 'react'
-import { useDispatch } from 'react-redux'
 import { fetchDeleteTodo, fetchToggleStatusTodo } from '../redux/apiRequests'
 import { type Todo } from '../redux/todoSlice'
+import { useAppDispatch } from '../redux/hooks'
 
 interface TodoItemProps extends Todo {
 }
 
 const TodoItem: FC<TodoItemProps> = ({ id, title, completed }): ReactElement => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const handleCompleteTodo = (id: string) => (): void => {
     dispatch(fetchToggleStatusTodo(id) as any)
