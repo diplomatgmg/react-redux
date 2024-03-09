@@ -38,7 +38,7 @@ const fetchDeleteTodo = createAsyncThunk(
         return
       }
 
-      dispatch(removeTodo({ id }))
+      dispatch(removeTodo(id))
 
     } catch (error) {
       if (error instanceof Error) {
@@ -70,7 +70,7 @@ const fetchToggleStatusTodo = createAsyncThunk(
         return
       }
 
-      dispatch(toggleTodoComplete({ id }))
+      dispatch(toggleTodoComplete(id))
 
     } catch (error) {
       if (error instanceof Error) {
@@ -103,7 +103,7 @@ const fetchAddNewTask = createAsyncThunk(
         return
       }
 
-      dispatch(addTodo({ title }))
+      dispatch(addTodo(title))
 
     } catch (error: any) {
       return rejectWithValue(error.message)
