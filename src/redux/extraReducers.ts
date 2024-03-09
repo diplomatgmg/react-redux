@@ -1,23 +1,33 @@
-import { type Todo, type TodoState } from './todoSlice'
-import { fetchDeleteTodo, fetchTodos, fetchToggleStatusTodo } from './apiRequests'
+import { type TodoState } from './todoSlice'
 import { type ActionReducerMapBuilder, type PayloadAction } from '@reduxjs/toolkit'
+import _ from 'lodash'
+import fetchTodos from './thunks/fetchTodos'
+import fetchToggleStatusTodo from './thunks/fetchToggleStatusTodo'
+import fetchDeleteTodo from './thunks/fetchDeleteTodo'
 
-const setError = (state: TodoState, action: PayloadAction<unknown, string, unknown>): void => {
-  state.status = 'failed'
-  state.error = action.payload
+const isError = (action: PayloadAction<any>): boolean => {
+  return action.type.endsWith('rejected')
 }
 
 export default (builder: ActionReducerMapBuilder<TodoState>): void => {
   builder
-    .addCase(fetchTodos.pending, (state: TodoState) => {
-      state.status = 'pending'
-      state.error = false
+    .addCase(fetchTodos.pending, (state) => {
+      state.loading = true
+      state.error = null
     })
-  builder.addCase(fetchTodos.fulfilled, (state: TodoState, action: PayloadAction<Todo[]>) => {
-    state.status = 'succeeded'
-    state.todos = action.payload
-  })
-  builder.addCase(fetchTodos.rejected, setError)
-  builder.addCase(fetchDeleteTodo.rejected, setError)
-  builder.addCase(fetchToggleStatusTodo.rejected, setError)
+    .addCase(fetchTodos.fulfilled, (state, action) => {
+      state.todos = action.payload
+      state.loading = false
+    })
+    .addCase(fetchToggleStatusTodo.pending, (state, action) => {
+      const toggledTodo = _.find(state.todos, action.payload)!
+      toggledTodo.completed = !toggledTodo.completed
+    })
+    .addCase(fetchDeleteTodo.fulfilled, (state, action) => {
+      state.todos = state.todos.filter((todo) => todo.id !== action.payload)
+    })
+    .addMatcher(isError, (state, action: PayloadAction<string>) => {
+      state.error = action.payload
+      state.loading = false
+    })
 }

@@ -10,14 +10,14 @@ interface Todo {
 
 interface TodoState {
   todos: Todo[]
-  status: 'idle' | 'pending' | 'succeeded' | 'failed'
-  error: boolean | unknown
+  loading: boolean
+  error: string | null
 }
 
 const initialState: TodoState = {
   todos: [],
-  status: 'idle',
-  error: false
+  loading: false,
+  error: null
 }
 
 const todoSlice = createSlice({

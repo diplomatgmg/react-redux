@@ -18,7 +18,6 @@ const TodoList = (): ReactElement | null => {
       {sortedTodos.map((todo) => (
           <TodoItem key={todo.id}
                     {...todo}
-
           />
       ))}
     </ul>
