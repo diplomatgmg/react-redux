@@ -16,23 +16,26 @@ export default (builder: ActionReducerMapBuilder<TodoState>): void => {
       state.loading = true
       state.error = null
     })
-    .addCase(fetchTodos.fulfilled, (state, action) => {
-      state.todos = action.payload
-      state.loading = false
-    })
     .addCase(fetchAddNewTodo.pending, (state) => {
+      state.loading = true
       state.error = null
-    })
-    .addCase(fetchAddNewTodo.fulfilled, (state, action) => {
-      state.todos.push(action.payload)
     })
     .addCase(fetchToggleStatusTodo.pending, (state, action) => {
       const toggledTodo = _.find(state.todos, action.payload)!
       toggledTodo.completed = !toggledTodo.completed
     })
-    .addCase(fetchDeleteTodo.fulfilled, (state, action) => {
-      state.todos = state.todos.filter((todo) => todo.id !== action.payload)
+
+    .addCase(fetchTodos.fulfilled, (state, action) => {
+      state.todos = action.payload
+      state.loading = false
     })
+    .addCase(fetchAddNewTodo.fulfilled, (state, action) => {
+      state.todos.push(action.payload)
+    })
+    .addCase(fetchDeleteTodo.fulfilled, (state, action) => {
+      state.todos = _.reject(state.todos, { id: action.payload })
+    })
+
     .addMatcher(isError, (state, action: PayloadAction<string>) => {
       state.error = action.payload
       state.loading = false
