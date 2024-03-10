@@ -6,7 +6,7 @@ import fetchToggleStatusTodo from './thunks/fetchToggleStatusTodo'
 import fetchDeleteTodo from './thunks/fetchDeleteTodo'
 import fetchAddNewTodo from './thunks/fetchAddNewTodo'
 
-const isError = (action: PayloadAction<any>): boolean => {
+const isError = (action: PayloadAction<unknown>): boolean => {
   return action.type.endsWith('rejected')
 }
 
