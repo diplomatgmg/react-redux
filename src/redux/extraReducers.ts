@@ -17,7 +17,6 @@ export default (builder: ActionReducerMapBuilder<TodoState>): void => {
       state.error = null
     })
     .addCase(fetchAddNewTodo.pending, (state) => {
-      state.loading = true
       state.error = null
     })
     .addCase(fetchToggleStatusTodo.pending, (state, action) => {
@@ -38,6 +37,5 @@ export default (builder: ActionReducerMapBuilder<TodoState>): void => {
 
     .addMatcher(isError, (state, action: PayloadAction<string>) => {
       state.error = action.payload
-      state.loading = false
     })
 }

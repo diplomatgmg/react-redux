@@ -16,6 +16,10 @@ const App = (): React.ReactElement => {
   }
 
   const handleAddTask = (): void => {
+    if (text === '') {
+      return
+    }
+
     void dispatch(fetchAddNewTask(text))
     setText('')
   }
